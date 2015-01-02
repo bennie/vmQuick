@@ -8,10 +8,12 @@ Usage:
 
 """
 
-import pyVmomi, re, vmquick
+from vmQuick import vmQuick
+from pyVmomi import vim
+import re
 
-si = vmquick.login('vcenter','MYUSERNAME','MYPASSWORD')
-hosts = vmquick.get_hosts(si)
+q = vmQuick('vcenter.myserver.com','MYUSERNAME','MYPASSWORD')
+hosts = q.get_hosts()
 
 ### Subs
 
@@ -32,5 +34,5 @@ for host in sorted(hosts,key=lambda host: host.name):
         continue
 
     for hba in host.config.storageDevice.hostBusAdapter:
-        if type(hba) == pyVmomi.types.vim.host.FibreChannelHba:
+        if type(hba) == vim.host.FibreChannelHba:
             print "\t".join([host.name,'vcenter',hba.pci,hba.device,hba.status,hba.model,hba.driver,wwnHex(hba.portWorldWideName),wwnHex(hba.nodeWorldWideName)])

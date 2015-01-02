@@ -1,6 +1,7 @@
 #!/usr/bin/env python2.7
 
-import getopt, sys, vmquick
+from vmQuick import vmQuick
+import getopt, sys
 
 if len(sys.argv) < 3:
 	sys.exit("Usage: ./vmotion.py USERNAME PASSWORD TARGET_HOST TARGET_VOLUME VM_NAME")
@@ -12,9 +13,9 @@ password = vms.pop(0)
 target_host = vms.pop(0)
 target_vol  = vms.pop(0)
 
-si = vmquick.login('vcenter',username,password)
+q = vmQuick('vcenter.myserver.com')
 
 for vm_name in vms:
    print "Moving {} to {} / {}".format(vm_name,target_host,target_vol)
-   task = vmquick.vmotion_vm(si,vm_name,target_host,target_vol)
-   vmquick.wait_for_tasks(si,[task])
+   task = q.vmotion_vm(vm_name,target_host,target_vol)
+   q.wait_for_tasks([task])

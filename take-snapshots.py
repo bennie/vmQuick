@@ -8,9 +8,9 @@ Usage:
 
 """
 
-import vmquick
+from vmQuick import vmQuick
 
-si = vmquick.login('vcenter')
+q = vmQuick('vcenter.myserver.com')
 
 vms_to_snap = "pxe43 pxe44 pxe45 pxe46 pxe47".split()
 snapshot_name = "pre-puppet"

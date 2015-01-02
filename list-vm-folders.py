@@ -9,10 +9,10 @@ Usage:
 
 """
 
-import vmquick
+from vmQuick import vmQuick
 
-si = vmquick.login('vcenter','MYUSERNAME','MYPASSWORD')
-folders = vmquick.get_folders(si)
+q = vmQuick('vcenter.myserver.com','MYUSERNAME','MYPASSWORD')
+folders = q.get_folders()
 
 ### Gather the data
 

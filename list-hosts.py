@@ -8,10 +8,10 @@ Usage:
 
 """
 
-import vmquick
+from vmQuick import vmQuick
 
-si = vmquick.login('vcenter','MYUSERNAME','MYPASSWORD')
-hosts = vmquick.get_hosts(si)
+q = vmQuick('vcenter.myserver.com','MYUSERNAME','MYPASSWORD')
+hosts = q.get_hosts()
 
 print "vCenter\tHost\tVersion\tRuntime Status\tMGMT IP\tsubnet\tMAC"
 

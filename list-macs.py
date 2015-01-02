@@ -8,14 +8,15 @@ Usage:
 
 """
 
-import pyVmomi, vmquick
+from vmQuick import vmQuick
+from pyVmomi import vim
 
-si = vmquick.login('vcenter','MYUSERNAME','MYPASSWORD')
-vms = vmquick.get_registered_vms(si)
+q = vmQuick('vcenter.myserver.com','MYUSERNAME','MYPASSWORD')
+vms = q.get_registered_vms()
 
 print "VM\thost\tvCenter\tMAC\tlabel\tnetwork\tstatus"
 
 for vm in vms:
     for device in vm.config.hardware.device:
-        if type(device.backing) == pyVmomi.types.vim.vm.device.VirtualEthernetCard.NetworkBackingInfo:
+        if type(device.backing) == vim.vm.device.VirtualEthernetCard.NetworkBackingInfo:
             print "\t".join([vm.config.name,vm.summary.runtime.host.name,'vcenter',device.macAddress,device.deviceInfo.label,device.backing.deviceName,str(device.connectable.connected)])

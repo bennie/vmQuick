@@ -8,10 +8,10 @@ Usage:
 
 """
 
-import vmquick
+from vmQuick import vmQuick
 
-si = vmquick.login('vcenter','MYUSERNAME','MYPASSWORD')
-vms = vmquick.get_registered_vms(si)
+q = vmQuick('vcenter.myserver.com','MYUSERNAME','MYPASSWORD')
+vms = q.get_registered_vms()
 
 ### Gather the data
 
