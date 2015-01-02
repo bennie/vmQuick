@@ -1,10 +1,10 @@
 #!/usr/bin/env python2.7
-"""list-vms.py
+"""list-macs.py
 
 Author: Phillip Pollard <phillip@purestorage.com>
 
 Usage:
-    list-vms.py
+    list-macs.py
 
 """
 
@@ -12,7 +12,7 @@ from vmQuick import vmQuick
 from pyVmomi import vim
 
 q = vmQuick('vcenter.myserver.com','MYUSERNAME','MYPASSWORD')
-vms = q.get_registered_vms()
+vms = q.get_vms()
 
 print "VM\thost\tvCenter\tMAC\tlabel\tnetwork\tstatus"
 

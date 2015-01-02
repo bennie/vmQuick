@@ -76,47 +76,47 @@ class vmQuick:
 
   ### General methods
 
-  def get_cluster_by_name(self, name):
+  def get_cluster_by_name(self, name, root=None):
       """
       Find a cluster by it's name and return it
       """
-      return self._get_obj([vim.ClusterComputeResource], name)
+      return self._get_obj([vim.ClusterComputeResource], name, root)
 
-  def get_clusters(self):
+  def get_clusters(self, root=None):
       """
       Returns all clusters
       """
-      return self._get_all_objs([vim.ClusterComputeResource])
+      return self._get_all_objs([vim.ClusterComputeResource], root)
 
-  def get_datacenter_by_name(self, name):
+  def get_datacenter_by_name(self, name, root=None):
       """
       Find a datacenter by it's name and return it
       """
-      return self._get_obj([vim.Datacenter], name)
+      return self._get_obj([vim.Datacenter], name, root)
 
-  def get_datacenters(self):
+  def get_datacenters(self, root=None):
       """
       Returns all datacenters
       """
-      return self._get_all_objs([vim.Datacenter])
+      return self._get_all_objs([vim.Datacenter], root)
 
-  def get_datastore_by_name(self, name):
+  def get_datastore_by_name(self, name, root=None):
       """
       Find a datastore by it's name and return it
       """
-      return self._get_obj([vim.Datastore], name)
+      return self._get_obj([vim.Datastore], name, root)
 
-  def get_datastores(self):
+  def get_datastores(self, root=None):
       """
       Returns all datastores
       """
-      return self._get_all_objs([vim.Datastore])
+      return self._get_all_objs([vim.Datastore], root)
 
   def get_folder_by_name(self, name, root=None):
       """
       Find a folder by it's name and return it
       """
-      return self._get_obj([vim.Folder], name, root)
+      return self._get_obj([vim.Folder], name, root, root)
 
   def get_folders(self,root=None):
       """
@@ -140,33 +140,33 @@ class vmQuick:
         hosts.append(host)
       return hosts
 
-  def get_registered_vms(self):
+  def get_vm_by_name(self, name, root=None):
+      """
+      Find a virtual machine by it's name and return it
+      """
+      return self._get_obj([vim.VirtualMachine], name, root)
+
+  def get_vms(self, root=None):
       """
       Returns all vms
       """
-      raw_vms = self._get_all_objs([vim.VirtualMachine])
+      raw_vms = self._get_all_objs([vim.VirtualMachine], root)
       vms = []
       for vm in sorted(raw_vms,key=lambda vm: vm.summary.config.name):    
         vms.append(vm)
       return vms
 
-  def get_resource_pool(self, name):
+  def get_resource_pool_by_name(self, name, root=None):
       """
       Find a virtual machine by it's name and return it
       """
-      return self._get_obj([vim.ResourcePool], name)
+      return self._get_obj([vim.ResourcePool], name, root)
 
-  def get_resource_pools(self):
+  def get_resource_pools(self, root=None):
       """
       Returns all resource pools
       """
-      return self._get_all_objs([vim.ResourcePool])
-
-  def get_vm_by_name(self, name):
-      """
-      Find a virtual machine by it's name and return it
-      """
-      return self._get_obj([vim.VirtualMachine], name)
+      return self._get_all_objs([vim.ResourcePool], root)
 
   def is_ready(vm):
       while True:
@@ -230,8 +230,7 @@ class vmQuick:
 
   def wait_for_tasks(self, tasks):
      """
-     Given the service instance si and tasks, it returns after all the
-     tasks are complete
+     Given a list of tasks, this method blocks until all tasks are complete
      """
      si = self._get_si()
      pc = si.content.propertyCollector

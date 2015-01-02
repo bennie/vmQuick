@@ -11,7 +11,7 @@ Usage:
 from vmQuick import vmQuick
 
 q = vmQuick('vcenter.myserver.com','MYUSERNAME','MYPASSWORD')
-vms = q.get_registered_vms()
+vms = q.get_vms()
 
 def print_snap_info(vmname,ref):
 	for snap in ref:
