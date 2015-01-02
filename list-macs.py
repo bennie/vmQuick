@@ -8,10 +8,10 @@ Usage:
 
 """
 
-import pyVmomi, vmutils
+import pyVmomi, vmquick
 
-si = vmutils.login('vcenter','MYUSERNAME','MYPASSWORD')
-vms = vmutils.get_registered_vms(si)
+si = vmquick.login('vcenter','MYUSERNAME','MYPASSWORD')
+vms = vmquick.get_registered_vms(si)
 
 print "VM\thost\tvCenter\tMAC\tlabel\tnetwork\tstatus"
 

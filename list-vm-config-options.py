@@ -1,10 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 
 from pyVmomi import vim
-import vmutils
+import vmquick
 
-si = vmutils.login('vcenter')
-vm = vmutils.get_vm_by_name(si,'lpm17 - Delete Dec 31')
+si = vmquick.login('vcenter')
+vm = vmquick.get_vm_by_name(si,'lpm17 - Delete Dec 31')
 
 for config in vm.config.extraConfig:
 	if config.key != 'guestinfo.hostname':
@@ -20,7 +20,7 @@ vmspec.extraConfig.append(optval)
 
 task = vm.Reconfigure(vmspec)
 
-vmutils.wait_for_tasks(si,[task])
+vmquick.wait_for_tasks(si,[task])
 
 for config in vm.config.extraConfig:
 	if config.key != 'guestinfo.hostname':

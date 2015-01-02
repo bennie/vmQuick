@@ -8,10 +8,10 @@ Usage:
 
 """
 
-import pyVmomi, re, vmutils
+import pyVmomi, re, vmquick
 
-si = vmutils.login('vcenter','MYUSERNAME','MYPASSWORD')
-hosts = vmutils.get_hosts(si)
+si = vmquick.login('vcenter','MYUSERNAME','MYPASSWORD')
+hosts = vmquick.get_hosts(si)
 
 ### Subs
 

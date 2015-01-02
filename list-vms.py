@@ -9,10 +9,10 @@ Usage:
 
 """
 
-import vmutils
+import vmquick
 
-si = vmutils.login('vcenter','MYUSERNAME','MYPASSWORD')
-vms = vmutils.get_registered_vms(si)
+si = vmquick.login('vcenter','MYUSERNAME','MYPASSWORD')
+vms = vmquick.get_registered_vms(si)
 
 ### Gather the data
 
