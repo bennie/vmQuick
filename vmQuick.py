@@ -116,7 +116,7 @@ class vmQuick:
       """
       Find a folder by it's name and return it
       """
-      return self._get_obj([vim.Folder], name, root, root)
+      return self._get_obj([vim.Folder], name, root)
 
   def get_folders(self,root=None):
       """
