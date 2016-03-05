@@ -1,7 +1,7 @@
 #!/usr/bin/env python2.7
 """list-vms.py
 
-Author: 
+Author:
         Phillip Pollard <phillip@purestorage.com>
 
 Usage:
@@ -20,5 +20,5 @@ folders = q.get_folders()
 #print "Guest\tIP\tPath\tvcenter\thost\tOS"
 
 for folder in folders:
-	if folder.childType[1] == "VirtualMachine":
-		print folder.name
+    if folder.childType[1] == "VirtualMachine":
+        print folder.name

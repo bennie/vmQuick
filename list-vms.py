@@ -1,7 +1,7 @@
 #!/usr/bin/env python2.7
 """list-vms.py
 
-Author: 
+Author:
         Phillip Pollard <phillip@purestorage.com>
 
 Usage:
@@ -9,18 +9,39 @@ Usage:
 
 """
 
+import time
+import pprint
+
 from vmQuick import vmQuick
 
 q = vmQuick('vcenter.myserver.com','MYUSERNAME','MYPASSWORD')
-vms = q.get_vms()
 
-### Gather the data
+### We could loop over get_vms() - 
+# vms = q.get_vms()
+# for vm in vms:
 
-print "Guest\tIP\tPath\tvcenter\thost\tOS"
+### Gather the data with cluster info
 
-for vm in vms:
-    os = ''
-    if vm.summary.config.guestFullName: os = vm.summary.config.guestFullName
-    ip = ''
-    if vm.summary.guest.ipAddress: ip = vm.summary.guest.ipAddress
-    print "\t".join([vm.summary.config.name,ip,vm.summary.config.vmPathName,'vcenter',vm.summary.runtime.host.name,os])
+clusters = q.get_clusters()
+
+print "Cluster\tGuest\tIP\thost\tPath\tOS\tCreated"
+
+for clus in sorted(clusters.keys()):
+    for vm in sorted(clus.resourcePool.vm, key=lambda vm: vm.summary.runtime.host.name):
+
+        os = ''
+        if vm.summary.config.guestFullName: os = vm.summary.config.guestFullName
+
+        ip = ''
+        if vm.summary.guest.ipAddress: ip = vm.summary.guest.ipAddress
+
+        host = ''
+        if vm.summary.runtime.host: host = vm.summary.runtime.host.name
+
+        created = ''
+        for config in vm.config.extraConfig:
+            if config.key == 'guestinfo.created':
+                t = time.localtime(int(config.value))
+                created = "{} ({})".format(time.strftime("%d %b %Y %H:%M:%S",t),config.value)
+
+        print "\t".join([clusters[clus],vm.summary.config.name,ip,host,vm.summary.config.vmPathName,os,created])

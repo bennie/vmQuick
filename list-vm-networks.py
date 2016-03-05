@@ -19,4 +19,4 @@ print "Guest\thost\tNetwork Label"
 
 for vm in vms:
     for net in vm.network:
-    	print "\t".join([vm.summary.config.name,vm.summary.runtime.host.name,net.name])
+        print "\t".join([vm.summary.config.name,vm.summary.runtime.host.name,net.name])

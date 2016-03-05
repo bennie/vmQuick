@@ -1,21 +1,41 @@
 #!/usr/bin/env python2.7
 
+# Some original code by Phillip Pollard used to build this
+# Written by Shane Reed Aug-2015
+
 from vmQuick import vmQuick
-import getopt, sys
+from argparse import ArgumentParser
 
-if len(sys.argv) < 3:
-	sys.exit("Usage: ./vmotion.py USERNAME PASSWORD TARGET_HOST TARGET_VOLUME VM_NAME")
 
-vms = sys.argv
-vms.pop(0) # lose the name of the script
-username = vms.pop(0)
-password = vms.pop(0)
-target_host = vms.pop(0)
-target_vol  = vms.pop(0)
+def main():
 
-q = vmQuick('vcenter.myserver.com')
+    q = vmQuick('vcenter')
 
-for vm_name in vms:
-   print "Moving {} to {} / {}".format(vm_name,target_host,target_vol)
-   task = q.vmotion_vm(vm_name,target_host,target_vol)
-   q.wait_for_tasks([task])
+    parser = ArgumentParser()
+    parser.add_argument('-v', '--vmname', dest='vm_name', help='vm to migrate')
+    parser.add_argument('-H', '--host', dest='target_host', help='host to move to')
+    parser.add_argument('-D', '--datastore', dest='target_datastore', help=' new datastore')
+    args = parser.parse_args()
+
+    if args.vm_name is None:
+        vm_name = raw_input('Enter Name of vm: ')
+    else:
+        vm_name = args.vm_name
+
+    if args.target_host is None:
+        target_host = raw_input('Enter Name of target host: ')
+    else:
+        target_host = args.target_host
+
+    if args.target_datastore is None:
+        target_datastore = raw_input('Enter Name of target datastore: ')
+    else:
+        target_datastore = args.target_datastore
+
+    print "Attempting to move {} to {} / {}".format(vm_name, target_host, target_datastore)
+
+    task = q.vmotion_vm(vm_name, target_host, target_datastore)
+    q.wait_for_tasks([task])
+
+if __name__ == "__main__":
+    main()
