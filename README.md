@@ -2,12 +2,12 @@
 Helper library for working with VMware from python
 
 # Contributions
-
-Predominately written by Phillip Pollard
-
-Additional contributions by:
+ - Chris Anderson
+ - Jamie Bliss
  - Corry Haines
- - Efrain Keline
+ - Evelyn Kline
+ - Tom Patterson
+ - Phillip Pollard
  - Shane Reed
 
 # License
